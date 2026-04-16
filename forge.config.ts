@@ -28,8 +28,8 @@ const config: ForgeConfig = {
       name: "@electron-forge/publisher-github",
       config: {
         repository: {
-          owner: "Inkflow",
-          name: "inkflow",
+          owner: "rafaelvict",
+          name: "Inkflow",
         },
         prerelease: false,
         draft: true, // Publish as draft — review before making public
