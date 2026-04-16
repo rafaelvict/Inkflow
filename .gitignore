@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Build output
+.vite/
+out/
+dist/
+.next/
+*.tsbuildinfo
+
+# Environment variables (NEVER commit these)
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Electron Forge output
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Coverage
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# SSH keys (NEVER commit these)
+inkflow-deploy-key
+inkflow-deploy-key.pub
+*.pem
+
+# Windows Zone.Identifier junk
+*:Zone.Identifier

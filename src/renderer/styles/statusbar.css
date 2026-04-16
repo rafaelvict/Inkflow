@@ -1,0 +1,64 @@
+/* Inkflow StatusBar — WinUI 3 style */
+
+.statusbar {
+  display: flex;
+  align-items: center;
+  height: 26px;
+  min-height: 26px;
+  padding: 0 14px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+  gap: 16px;
+  user-select: none;
+}
+
+.statusbar-item {
+  font-size: 11px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.statusbar-shortcut {
+  margin-left: auto;
+  opacity: 0.5;
+}
+
+.statusbar-checklist {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.statusbar-saved {
+  color: var(--text-secondary);
+}
+
+.statusbar-unsaved {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.statusbar-saving {
+  color: var(--text-secondary);
+  animation: pulse 1.5s ease infinite;
+}
+
+.statusbar-sync {
+  font-size: 10px;
+}
+
+.statusbar-sync--syncing {
+  color: var(--accent);
+  animation: pulse 1.5s ease infinite;
+}
+
+.statusbar-sync--synced {
+  color: #10b981;
+}
+
+.statusbar-sync--offline {
+  color: #f59e0b;
+}
+
+.statusbar-sync--error {
+  color: #ef4444;
+}
