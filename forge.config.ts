@@ -72,6 +72,7 @@ const config: ForgeConfig = {
     new MakerDeb({
       options: {
         name: "inkflow",
+        bin: "inkflow",
         productName: "Inkflow",
         genericName: "Notepad + Whiteboard",
         description: "Notepad + Excalidraw + AI desktop app",

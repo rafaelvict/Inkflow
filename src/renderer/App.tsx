@@ -17,8 +17,25 @@ import { TemplateGallery } from "./components/TemplateGallery";
 import { DonateDialog } from "./components/DonateDialog";
 import { AboutDialog, SUPPORT_URL } from "./components/AboutDialog";
 import { getCloudPlugin, hasCloudPlugin, type AuthUser, type CloudNote } from "./lib/cloud-plugin";
-import { useSubscription } from "./cloud/hooks/useSubscription";
 import { useEditorPrefs } from "./hooks/useEditorPrefs";
+
+// Lazy-load useSubscription only when cloud plugin is available
+// This prevents build failures in the open-source repo where cloud/ is excluded
+function useSubscriptionStub(_uid: string | null) {
+  return { subscription: null, isPro: false, limits: null, loading: false };
+}
+
+let _useSubscription: typeof useSubscriptionStub = useSubscriptionStub;
+if (hasCloudPlugin()) {
+  try {
+    // Dynamic require — only resolves when cloud/ directory exists
+    const mod = require("./cloud/hooks/useSubscription");
+    _useSubscription = mod.useSubscription;
+  } catch {
+    // Cloud module not available (open-source build) — use stub
+  }
+}
+const useSubscription = _useSubscription;
 import {
   applyFontSizeToSelection,
   hasTextSelection,
