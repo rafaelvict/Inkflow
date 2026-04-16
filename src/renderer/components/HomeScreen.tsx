@@ -13,12 +13,11 @@ interface Team {
 
 // Lazy-loaded TeamWorkspace from cloud plugin (only loaded when cloud is enabled)
 // Wrapped in hasCloudPlugin() check so the import is never attempted in open-source builds
-// @ts-ignore — cloud module excluded in open-source builds
 const CloudTeamWorkspace = hasCloudPlugin()
   ? React.lazy(() =>
-      import("../cloud/components/TeamWorkspace").then((m: any) => ({ default: m.TeamWorkspace }))
+      import(/* @vite-ignore */ "../cloud/components/TeamWorkspace").then((m: any) => ({ default: m.TeamWorkspace }))
     )
-  : () => null;
+  : (() => null) as React.FC<any>;
 
 interface NoteMeta {
   id: string;
@@ -90,8 +89,7 @@ export function HomeScreen({ onOpenNote, onNewNote, onOpenTemplates, onOpenDonat
   useEffect(() => {
     if (authUser && hasCloudPlugin()) {
       // getUserTeams is loaded dynamically from the cloud plugin
-      // @ts-ignore — cloud module excluded in open-source builds
-      import("../cloud/lib/teams").then(({ getUserTeams }: { getUserTeams: (uid: string) => Promise<Team[]> }) => {
+      import(/* @vite-ignore */ "../cloud/lib/teams").then(({ getUserTeams }: { getUserTeams: (uid: string) => Promise<Team[]> }) => {
         getUserTeams(authUser.uid).then(setUserTeams).catch(() => setUserTeams([]));
       }).catch(() => setUserTeams([]));
     }

@@ -7,7 +7,7 @@ async function bootstrap() {
   // Register cloud plugin in official builds.
   // In open-source builds, this import is skipped and the app runs offline-only.
   if (import.meta.env.VITE_CLOUD_ENABLED === "true") {
-    await import("./cloud/register-cloud-plugin");
+    await import(/* @vite-ignore */ "./cloud/register-cloud-plugin");
   }
 
   const root = createRoot(document.getElementById("root")!);
