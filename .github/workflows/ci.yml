@@ -25,3 +25,22 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+  build-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - run: npm ci
+
+      - name: Verify build (Linux)
+        run: npm run make
+        env:
+          # No cloud features in CI build verification
+          VITE_CLOUD_ENABLED: "false"

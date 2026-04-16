@@ -78,8 +78,8 @@ if [[ -z "$STAGED" ]]; then
   exit 0
 fi
 
-echo "$STAGED" | head -30
 FILECOUNT=$(echo "$STAGED" | wc -l)
+echo "$STAGED" | head -30 || true
 echo "  $FILECOUNT files changed"
 
 # Get the latest commit message from private repo for context

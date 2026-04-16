@@ -1,0 +1,108 @@
+.update-banner {
+  position: fixed;
+  bottom: 28px; /* above status bar (24px) with margin */
+  right: 16px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-secondary, #f3f4f6);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  max-width: 420px;
+  animation: banner-in 200ms ease forwards;
+}
+
+.theme-dark .update-banner {
+  background: var(--bg-secondary, #1e1e2e);
+  border-color: var(--border, #334155);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes banner-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.update-banner-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.update-banner-msg {
+  color: var(--text-primary, #1a1a1a);
+  flex: 1;
+  min-width: 0;
+}
+
+.update-banner-msg strong {
+  color: var(--accent, #7c3aed);
+}
+
+.update-banner-note {
+  color: var(--text-secondary, #6b7280);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.update-banner-btn {
+  flex-shrink: 0;
+  background: var(--accent, #7c3aed);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms;
+}
+
+.update-banner-btn:hover {
+  background: #6d28d9;
+}
+
+.update-banner-dismiss {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--text-secondary, #6b7280);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 4px;
+  transition: color 100ms;
+}
+
+.update-banner-dismiss:hover {
+  color: var(--text-primary, #1a1a1a);
+}
+
+/* Progress bar */
+.update-banner-progress {
+  width: 80px;
+  height: 6px;
+  background: var(--border, #e5e7eb);
+  border-radius: 99px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.update-banner-progress-bar {
+  height: 100%;
+  background: var(--accent, #7c3aed);
+  border-radius: 99px;
+  transition: width 200ms ease;
+}
+
+.update-banner-pct {
+  color: var(--text-secondary, #6b7280);
+  font-size: 12px;
+  flex-shrink: 0;
+  min-width: 32px;
+  text-align: right;
+}

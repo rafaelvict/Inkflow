@@ -3,7 +3,11 @@ import { MakerSquirrel } from "@electron-forge/maker-squirrel";
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
 import { MakerDMG } from "@electron-forge/maker-dmg";
+import { MakerZIP } from "@electron-forge/maker-zip";
 import { VitePlugin } from "@electron-forge/plugin-vite";
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pkg = require("./package.json");
 
 const config: ForgeConfig = {
   packagerConfig: {
@@ -11,8 +15,8 @@ const config: ForgeConfig = {
     executableName: "inkflow",
     icon: "./build/icon",
     asar: true,
-    appVersion: "0.5.0",
-    appCopyright: "Copyright © 2025 Inkflow",
+    appVersion: pkg.version,
+    appCopyright: `Copyright (c) ${new Date().getFullYear()} Inkflow`,
     // File association: .note files open with Inkflow
     protocols: [
       {
@@ -20,6 +24,16 @@ const config: ForgeConfig = {
         schemes: ["inkflow"],
       },
     ],
+    // macOS code signing (no-op when certificate not in keychain)
+    osxSign: {},
+    // macOS notarization (only active when APPLE_ID env var is set, i.e. CI)
+    osxNotarize: process.env.APPLE_ID
+      ? {
+          appleId: process.env.APPLE_ID,
+          appleIdPassword: process.env.APPLE_PASSWORD!,
+          teamId: process.env.APPLE_TEAM_ID!,
+        }
+      : undefined,
   },
   // Publisher: GitHub Releases (used by electron-updater to generate app-update.yml)
   // Set GH_TOKEN env var and run `npm run make` to publish a release.
@@ -39,9 +53,13 @@ const config: ForgeConfig = {
   makers: [
     new MakerSquirrel({
       name: "Inkflow",
+      setupExe: "InkflowSetup.exe",
       setupIcon: "./build/icon.ico",
       iconUrl:
-        "https://raw.githubusercontent.com/Inkflow/inkflow/main/apps/desktop/build/icon.ico",
+        "https://raw.githubusercontent.com/rafaelvict/Inkflow/main/build/icon.ico",
+      // Windows code signing (env vars set in CI only; undefined = unsigned local build)
+      certificateFile: process.env.WINDOWS_PFX_FILE || undefined,
+      certificatePassword: process.env.WINDOWS_PFX_PASSWORD || undefined,
       // File type associations for Windows
       fileAssociations: [
         {
@@ -76,6 +94,8 @@ const config: ForgeConfig = {
       name: "Inkflow",
       icon: "./build/icon.icns",
     }),
+    // ZIP for macOS — required by electron-updater for auto-update
+    new MakerZIP({}, ["darwin"]),
   ],
   plugins: [
     new VitePlugin({
